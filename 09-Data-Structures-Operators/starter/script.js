@@ -45,3 +45,31 @@ const restaurant = {
     },
   },
 };
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  console.log(text);
+  const rows = text.split('\n');
+  console.log(rows);
+  for (var i = 0; i < rows.length; i++) {
+    const [first, second] = rows[i].toLowerCase().trim().split('_');
+    const output = `${first}${second[0].toUpperCase()}${second.slice(1)}`;
+    console.log(output.padEnd(20, ' ') + '✅'.repeat(i + 1));
+  }
+});
+
+const flightsArr = flights.split('+');
+console.log(flightsArr);
+for (const flight of flightsArr) {
+  const [type, from, to, time] = flight.split(';');
+  const output = `${type.startsWith('_Delayed') ? '🛑' : ''}${type.replaceAll(
+    '_',
+    ' '
+  )} from ${from.slice(0, 3).toUpperCase()} to ${to
+    .slice(0, 3)
+    .toUpperCase()} ${time.replace(':', 'h')}`.padStart(42);
+  console.log(output);
+ 
+}
