@@ -277,3 +277,17 @@ t2.minutes;
 t2.minutes= 9;
 console.log(t2);
 TimerCl.compare(t1, t2);
+
+// constructor function inheritance or prototypal inheritance in constructor functions 
+
+const Student = function (firstName, birthYear, id) {
+  Person.call(this, firstName, birthYear);
+  this.id = id;
+}
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.studentInfo = function () {
+  console.log(`Student name is ${this.firstName} and id is ${this.id}`);
+}
+const mike = new Student('mike', 1997, 67);
+mike.studentInfo();
