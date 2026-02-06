@@ -33,12 +33,32 @@ Car.prototype.brake = function () {
   console.log(this.speed - 5);
 };
 
+const CarEV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+}
+
+CarEV.prototype = Object.create(Car.prototype);
+CarEV.prototype.constructor = CarEV;
+CarEV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+}
+CarEV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge -= 1;
+  console.log(`${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`);
+}
+
 const bmw = new Car('BMW', 120);
 const mercedes = new Car('mercedes', 95);
 bmw.accelerate();
 bmw.brake();
 mercedes.accelerate();
 mercedes.brake();
+const tesla = new CarEV('tesla', 140, 90);
+tesla.chargeBattery(10);
+tesla.accelerate();
+tesla.brake();
 
 // ES6 CLASSES  //
 
@@ -284,10 +304,17 @@ const Student = function (firstName, birthYear, id) {
   Person.call(this, firstName, birthYear);
   this.id = id;
 }
-
+console.dir(Student);
+console.dir(Person);
 Student.prototype = Object.create(Person.prototype);
-Student.prototype.studentInfo = function () {
-  console.log(`Student name is ${this.firstName} and id is ${this.id}`);
-}
+Student.prototype.constructor = Student;
+console.log(Student.prototype.constructor);
 const mike = new Student('mike', 1997, 67);
+console.log(mike);
+ Student.prototype.studentInfo = function () {
+  console.log(`Student name is ${this.firstName} and id is ${this.id}`);
+ }
+// const mike = new Student('mike', 1997, 67);
+
 mike.studentInfo();
+mike.calcAge(); 
