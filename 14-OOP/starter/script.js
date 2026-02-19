@@ -36,18 +36,20 @@ Car.prototype.brake = function () {
 const CarEV = function (make, speed, charge) {
   Car.call(this, make, speed);
   this.charge = charge;
-}
+};
 
 CarEV.prototype = Object.create(Car.prototype);
 CarEV.prototype.constructor = CarEV;
 CarEV.prototype.chargeBattery = function (chargeTo) {
   this.charge = chargeTo;
-}
+};
 CarEV.prototype.accelerate = function () {
   this.speed += 20;
   this.charge -= 1;
-  console.log(`${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`);
-}
+  console.log(
+    `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`,
+  );
+};
 
 const bmw = new Car('BMW', 120);
 const mercedes = new Car('mercedes', 95);
@@ -118,6 +120,35 @@ class carCl {
   }
 }
 
+class EVCl extends carCl {
+  #charge;
+  constructor(name, speed, charge) {
+    super(name, speed);
+    this.#charge = charge;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge -= 1;
+    console.log(`${this.name} is going at ${this.speed} km/h , with a charge of ${this.#charge}.`);
+    return this;
+  }
+
+  chargeBattery(charge) {
+    this.#charge = charge;
+    return this;
+  }
+
+  brake() {
+    this.speed -= 5;
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+rivian.accelerate().brake().chargeBattery(50);
+console.log(rivian);
+
 const ford = new carCl('Ford', 120);
 console.log(ford.speed);
 ford.accelerate();
@@ -126,6 +157,8 @@ ford.speedUS = 50;
 console.log(ford.speed);
 ford.accelerate();
 ford.brake();
+
+
 
 // Practise OOPS concepts
 
@@ -271,21 +304,23 @@ Timer.prototype.start = function () {
 };
 
 class TimerCl {
-    constructor(seconds) {
-        this.seconds = seconds;
-    }
+  constructor(seconds) {
+    this.seconds = seconds;
+  }
 
-    // get minutes() {
-    //    return this.seconds/60;
-    // }
+  // get minutes() {
+  //    return this.seconds/60;
+  // }
 
-    set minutes(minutes) {
-        this.seconds = minutes * 60;
-    }
+  set minutes(minutes) {
+    this.seconds = minutes * 60;
+  }
 
-    static compare(t1, t2) {
-       return t1.seconds > t2.seconds ? console.log('Timer1 is greater') : console.log('Timer2 is greater');
-    }
+  static compare(t1, t2) {
+    return t1.seconds > t2.seconds
+      ? console.log('Timer1 is greater')
+      : console.log('Timer2 is greater');
+  }
 }
 
 const t1 = new Timer(600);
@@ -294,16 +329,16 @@ console.log(t1);
 const t2 = new TimerCl(300);
 console.log(t2);
 t2.minutes;
-t2.minutes= 9;
+t2.minutes = 9;
 console.log(t2);
 TimerCl.compare(t1, t2);
 
-// constructor function inheritance or prototypal inheritance in constructor functions 
+// constructor function inheritance or prototypal inheritance in constructor functions
 
 const Student = function (firstName, birthYear, id) {
   Person.call(this, firstName, birthYear);
   this.id = id;
-}
+};
 console.dir(Student);
 console.dir(Person);
 Student.prototype = Object.create(Person.prototype);
@@ -311,10 +346,10 @@ Student.prototype.constructor = Student;
 console.log(Student.prototype.constructor);
 const mike = new Student('mike', 1997, 67);
 console.log(mike);
- Student.prototype.studentInfo = function () {
+Student.prototype.studentInfo = function () {
   console.log(`Student name is ${this.firstName} and id is ${this.id}`);
- }
+};
 // const mike = new Student('mike', 1997, 67);
 
 mike.studentInfo();
-mike.calcAge(); 
+mike.calcAge();
