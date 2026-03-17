@@ -56,11 +56,23 @@ const renderCountry = function (data, className = '') {
         </article>`;
   countriesContainer.insertAdjacentHTML('beforeend', html);
 };
+
+const renderError = function (msg) {
+  console.log(msg);
+  countriesContainer.style.opacity = 1;
+   countriesContainer.insertAdjacentText('beforeend', msg);
+}
 const getCountryInfo = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(
-      response => response.json(),
-      err => console.log(err),
+      response => {
+        console.log(response);
+        // if (!response.ok) {
+        //   throw new Error(`Country not found , ${response.status}`);
+        // }
+        return response.json();
+      },
+     // err => console.log(err),
     )
     .then(
       data => {
@@ -70,22 +82,22 @@ const getCountryInfo = function (country) {
         if (!neighbour) return;
         return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
       },
-      err => console.error(err),
+     // err => console.error(err),
     )
     .then(
       response => response.json(),
-      err => console.error(err),
+     // err => console.error(err),
     )
     .then(
       data => renderCountry(data[0], 'neighbour'),
-      err => console.error(err),
+    //  err => console.error(err),
     )
-    .catch(err => console.error(err))
+    .catch(err => renderError(err))
     .finally(() => (countriesContainer.style.opacity = 1));
 };
 btn.addEventListener('click', () => {
-  getCountryInfo('portugal');
-  getCountryInfo('india');
+  getCountryInfo('united kingdom');
+  getCountryInfo('France');
 });
 
 //getCountryInfo('germany');
